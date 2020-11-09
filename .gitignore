@@ -3,3 +3,5 @@
 ################################################################################
 
 /ChatApi/ChatApi/bin
+/ChatApi/ChatApi/obj
+/ChatApi/.vs/ChatApi

@@ -1,0 +1,7 @@
+﻿{
+  "Data": {
+    "ConnectionString": "server=chatapi.apeskill.com;user id=ChatApi;password=123;port=3306;database=ChatApi;",
+    "ServerVersion": "auto",
+    "CommandTimeout": "600"
+  }
+}
