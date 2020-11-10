@@ -30,12 +30,18 @@
 ### Demo地址
 http://chat.apeskill.com/
 
+### gitee地址
+[gitee地址](https://gitee.com/chenpengsir/ChatApi.git)
+
 ### 注意
 - 创建mysql数据库,并将ChatApi.sql导入
 - 修改config配置数据库
 - 运行后端
 - 运行前端：npm run serve
 前端访问：http://localhost:1997/ 后端访问：http://localhost:44383/
+#### mysql存储表情
+1) 配置文件[mysqld]下添加：character_set_server=utf8mb4
+2) Content字段设置字符集：utf8mb4 排序规则:utf8mb4_general_ci
 ### 特别感谢
 前端是基于[Genal](https://github.com/genaller)的[genal-chat](https://github.com/genaller/genal-chat)（阿童木聊天室）二次开发的 也是本项目【小兰聊天室】名称的由来
 

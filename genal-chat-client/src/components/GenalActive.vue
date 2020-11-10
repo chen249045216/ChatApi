@@ -16,7 +16,7 @@
           <div class="active-content-users">
             <div class="active-content-user" v-for="data in activeGroupUser[activeRoom.groupId]" :key="data.userId">
               <genal-avatar :data="data" :showTime="false"></genal-avatar>
-              {{ data.username }}
+              {{ data.userName }}
             </div>
           </div>
           <a-button type="danger" class="active-content-out" @click="exitGroup">退出</a-button>

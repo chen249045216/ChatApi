@@ -104,3 +104,16 @@ export function passwordVerify(password: string): boolean {
   }
   return true;
 }
+
+/*
+*停顿（毫秒）
+*/
+export function sleep(numberMillis: number) {
+  var now = new Date();
+  var exitTime = now.getTime() + numberMillis;
+  while (true) {
+    now = new Date();
+    if (now.getTime() > exitTime)
+      return;
+  }
+}

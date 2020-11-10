@@ -6,6 +6,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\10.7788\聊天室\ChatApi\ChatApi\ChatApi\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\1.项目制作\4.ChatApi\ChatApi\ChatApi\ChatApi\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

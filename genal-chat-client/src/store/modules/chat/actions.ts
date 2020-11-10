@@ -23,6 +23,7 @@ import {
 import { DEFAULT_GROUP } from '@/const/index';
 import {socketUrl}from '@/api/fetch/config'
 import * as signalR from '@aspnet/signalr';
+import { sleep } from '@/utils/common.ts';
 
 const actions: ActionTree<ChatState, RootState> = {
   // 初始化socket连接和监听socket事件
@@ -45,9 +46,10 @@ const actions: ActionTree<ChatState, RootState> = {
       commit(SET_SIGNAL, signal);
       })
       .catch(function (error: any) {
-        setTimeout("console.log('重连中...');",5000);
-        dispatch("connectSocket");
         console.log(error);
+        console.log("重连中...");
+        sleep(5000);
+        dispatch("connectSocket");
       });
 
     // 获取所有群和好友数据
@@ -60,23 +62,11 @@ const actions: ActionTree<ChatState, RootState> = {
     });
 
     signal.onclose(async()=>{
-      
       console.log("监听到连接关闭");
-      // setTimeout("console.log('重连中...');",5000);
+      console.log("断线重连中...");
+      sleep(5000);
       dispatch("connectSocket");
     });
-
-    // let socket: SocketIOClient.Socket = io.connect(`/?userId=${user.userId}`, { reconnection: true });
-
-    // socket.on('connect', async () => {
-    //   console.log('连接成功');
-
-    //   // 获取聊天室所需所有信息
-    //   socket.emit('chatData', user);
-
-    //   // 先保存好socket对象
-    //   commit(SET_SOCKET, socket);
-    // });
 
     // 初始化事件监听
     signal.on('ActiveGroupUser', (data: any) => {
@@ -202,14 +192,6 @@ const actions: ActionTree<ChatState, RootState> = {
     signal.on('OnError',(res:ServerRes)=>{
       Vue.prototype.$message.error(res.msg);
     });
-
-    // socket.on('chatData', (res: ServerRes) => {
-    //   if (res.code) {
-    //     return Vue.prototype.$message.error(res.msg);
-    //   }
-    //   dispatch('handleChatData', res.data);
-    //   commit(SET_DROPPED, false);
-    // });
 
     signal.on('ExitGroup', (res: ServerRes) => {
       if (!res.code) {

@@ -28,21 +28,18 @@ namespace ChatApi.Hubs
             _dbContext = context;
             _mapper = mapper;
         }
-        public  override Task OnConnectedAsync()
+        public override Task OnConnectedAsync()
         {
-            try
+
+            AddOnline();
+            //Clients.Caller.SendAsync("getProfileInfo", "test", "test");
+            Groups.AddToGroupAsync(Context.ConnectionId, defaultGroup);
+            GetActiveGroupUser();
+            var userId = CurrentUserId;
+            lock (_lock)
             {
 
-
-                AddOnline();
-                //Clients.Caller.SendAsync("getProfileInfo", "test", "test");
-                Groups.AddToGroupAsync(Context.ConnectionId, defaultGroup);
-                GetActiveGroupUser();
-                var userId = CurrentUserId;
-                lock (_lock)
-                {
-
-                    if (_connections.Keys.FirstOrDefault(t => t.Equals(userId)) == null)
+                if (string.IsNullOrEmpty(_connections.Keys.FirstOrDefault(t => t.Equals(userId))))
                 {
                     _connections.Add(userId, Context.ConnectionId);
                 }
@@ -50,14 +47,8 @@ namespace ChatApi.Hubs
                 {
                     _connections[userId] = Context.ConnectionId;
                 }
-                }
-                return base.OnConnectedAsync();
             }
-            catch (Exception ex)
-            {
-                SendError(ex.Message);
-                throw ex;
-            }
+            return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
@@ -530,9 +521,12 @@ namespace ChatApi.Hubs
             {
                 var db = scope.AppDb;
                 var userInfo = db.ChatUsers.AsTracking().FirstOrDefault(t => t.Id.Equals(userId));
-                userInfo.IsOnline = IsOnlineEnum.online;
-                userInfo.LastLoginTime = DateTime.Now.ToTimestamp();
-                db.SaveChanges();
+                if (userInfo != null)
+                {
+                    userInfo.IsOnline = IsOnlineEnum.online;
+                    userInfo.LastLoginTime = DateTime.Now.ToTimestamp();
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -547,8 +541,11 @@ namespace ChatApi.Hubs
             {
                 var db = scope.AppDb;
                 var userInfo = db.ChatUsers.AsTracking().FirstOrDefault(t => t.Id.Equals(userId));
-                userInfo.IsOnline = IsOnlineEnum.notOnline;
-                db.SaveChanges();
+                if (userInfo != null)
+                {
+                    userInfo.IsOnline = IsOnlineEnum.notOnline;
+                    db.SaveChanges();
+                }
             }
         }
 

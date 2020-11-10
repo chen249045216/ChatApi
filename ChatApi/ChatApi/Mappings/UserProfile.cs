@@ -38,7 +38,8 @@ namespace ChatApi.Mappings
             CreateMap<FriendMessageDto, ChatFriendMessage>();
 
             CreateMap<ChatUser, FriendDto>()
-                .ForMember(dst => dst.UserId, opt => opt.MapFrom(x => x.Id));
+                .ForMember(dst => dst.UserId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(dst=>dst.Avatar,opt=>opt.MapFrom(x=>x.Avatar.ToImageUrl()));
 
             CreateMap<FriendDto, ChatUsersDto>();
         }

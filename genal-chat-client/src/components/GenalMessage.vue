@@ -7,7 +7,7 @@
         <genal-active type="group"></genal-active>
       </div>
       <div v-else class="message-header-box">
-        <span class="message-header-text">{{ userGather[activeRoom.userId].username }}</span>
+        <span class="message-header-text">{{ userGather[activeRoom.userId].userName }}</span>
         <a-icon type="sync" spin class="message-header-icon" v-if="dropped" />
         <genal-active type="friend"></genal-active>
       </div>
